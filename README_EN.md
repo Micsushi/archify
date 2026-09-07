@@ -25,6 +25,8 @@ Archify is a Node.js rendering and validation system for Cursor, Claude Code, Co
 
 **Current stable version:** `v2.16.0`. See [Changelog](CHANGELOG.md#2160--2026-08-30).
 
+Embedding verified diagrams in Flapstack? See the [versioned delivery contract](integrations/flapstack/README.md) for receipt verification, examples, and host safety requirements.
+
 **[Project page](https://tt-a1i.github.io/archify/)** · **[Scenario guide](https://tt-a1i.github.io/archify/guide.html)** · **[Proof Lab](https://tt-a1i.github.io/archify/gallery.html)**
 
 ```bash
