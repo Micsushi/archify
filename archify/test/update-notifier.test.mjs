@@ -351,7 +351,9 @@ function options(testFixture, fetchImpl, overrides = {}) {
     fetchImpl,
     now: () => baseTime,
     random: () => 0.5,
-    timeoutMs: 50,
+    // Concurrency fixtures hold mocked fetches across filesystem operations.
+    // Keep those schedules separate from the explicit 10 ms timeout test.
+    timeoutMs: childCheckTimeoutMs,
     ...overrides,
   };
 }
