@@ -47,10 +47,14 @@ test('clean staging preserves index modes and strips repository-only package met
     write(root, 'archify/bin/executable.mjs', '#!/usr/bin/env node\n', 0o755);
     write(root, 'archify/runtime/test/required.dat', 'runtime fixture\n');
     git(root, ['add', 'archify']);
+    git(root, ['update-index', '--chmod=+x', 'archify/bin/executable.mjs']);
 
     stageCleanSkill({ repoRoot: root, destination });
 
-    assert.equal(fs.statSync(path.join(destination, 'bin', 'executable.mjs')).mode & 0o777, 0o755);
+    const stagedMode = fs.statSync(path.join(destination, 'bin', 'executable.mjs')).mode;
+    // Windows has no Unix executable permission bits; retain the POSIX guarantee.
+    if (process.platform !== 'win32') assert.equal(stagedMode & 0o777, 0o755);
+    assert.equal(fs.readFileSync(path.join(destination, 'bin', 'executable.mjs'), 'utf8'), '#!/usr/bin/env node\n');
     assert.equal(fs.existsSync(path.join(destination, 'test')), false);
     assert.equal(
       fs.readFileSync(path.join(destination, 'runtime', 'test', 'required.dat'), 'utf8'),

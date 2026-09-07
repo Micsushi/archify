@@ -93,3 +93,20 @@ silently downgrade showcase quality or skip digest checks after an upgrade.
 Workflow source-schema migration remains the CLI's existing migration workflow;
 it is independent of this receipt contract. No persisted host data is migrated
 by this adapter.
+
+## Local verification
+
+From the repository root, run the focused host boundary and renderer checks:
+
+```sh
+node --test archify/test/flapstack-contract.test.mjs archify/test/delivery-contract.test.mjs archify/test/render-output-checks.test.mjs
+```
+
+For the complete repository gate, run `npm ci --prefix archify`, then
+`npm test --prefix archify`. Keep the checkout's LF line endings. Canonical ZIP
+builds require Node 22 and the existing Bash build script. The wider suite also
+uses `unzip`, Unix signal/permission behavior, symlink creation, and temporary Git
+repositories. Missing Windows symlink privileges or local Git identity policies
+can block those tests; do not disable access controls or Git hooks to obtain a
+green result. Report unavailable platform coverage separately from the focused
+delivery result. A passing focused gate does not certify the entire repository.
