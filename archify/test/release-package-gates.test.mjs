@@ -13,9 +13,11 @@ const repoRoot = path.resolve(__dirname, '..', '..');
 const canonicalZipNodeMajor = 22;
 const currentNodeMajor = Number(process.versions.node.split('.')[0]);
 const canonicalZipTest = (name, fn) => test(name, {
-  skip: currentNodeMajor === canonicalZipNodeMajor
-    ? false
-    : `canonical ZIP builds require Node ${canonicalZipNodeMajor}`,
+  skip: currentNodeMajor !== canonicalZipNodeMajor
+    ? `canonical ZIP builds require Node ${canonicalZipNodeMajor}`
+    : process.platform === 'win32'
+      ? 'canonical ZIP builds require POSIX filesystem mode support'
+      : false,
 }, fn);
 
 function workflowStep(workflow, name) {

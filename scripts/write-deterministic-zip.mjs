@@ -11,6 +11,11 @@ if (!rootArg || !outputArg) {
   process.exit(2);
 }
 
+if (process.platform === 'win32') {
+  console.error('deterministic ZIP builds require POSIX filesystem mode support; native Windows builds are unsupported. Use Linux, macOS, or WSL.');
+  process.exit(1);
+}
+
 const root = path.resolve(rootArg);
 const output = path.resolve(outputArg);
 const UTF8_FLAG = 0x0800;

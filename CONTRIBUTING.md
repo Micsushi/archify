@@ -108,9 +108,11 @@ scripts/build-zip.sh /tmp/archify-contrib.zip
 ```
 
 The runtime follows the Node range in `archify/package.json`, but canonical
-`archify.zip` container bytes are built only with Node 22. The builder rejects
-other Node majors so a different bundled zlib cannot publish a second byte
-representation of the same package contents.
+`archify.zip` container bytes are built only with Node 22 on a POSIX filesystem.
+The builder rejects other Node majors and native Windows so a different bundled
+zlib or missing filesystem mode support cannot publish a second byte
+representation of the same package contents. Use Linux, macOS, or WSL for the
+canonical archive; native Windows remains supported for package smoke checks.
 
 Bundled example or viewer changes normally require the Gallery rebuild. Skill runtime, schema, renderer, or published `SKILL.md` changes require checking `archify.zip` freshness and committing a rebuilt archive when the checked-in package contents differ.
 
